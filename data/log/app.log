@@ -1,0 +1,9 @@
+2016-06-21 14:47:37	请求http接口失败，请求url:tp://www.shengcai18.cn/user/，Curl error: Protocol tp not supported or disabled in libcurl	uri:/api/user/	ref:
+2016-06-21 14:48:25	请求http接口失败，请求url:r/，Curl error: Could not resolve host: r	uri:/api/user/	ref:
+2016-06-21 14:49:05	请求http接口失败，请求url:r/，Curl error: Could not resolve host: r	uri:/api/user/	ref:
+2016-06-21 14:50:03	请求http接口失败，请求url:er/，Curl error: Could not resolve host: er	uri:/api/user/	ref:
+2016-06-21 14:50:04	请求http接口失败，请求url:er/，Curl error: Could not resolve host: er	uri:/api/user/	ref:
+2016-06-21 14:50:19	请求http接口失败，请求url:er/，Curl error: Could not resolve host: er	uri:/api/user/	ref:
+2016-06-21 15:05:46	请求http接口失败，请求url:http://www.shengcaiss18.cn/user/，Curl error: Could not resolve host: www.shengcaiss18.cn	uri:/api/user/	ref:
+2016-06-21 15:06:23	请求http接口失败，请求url:http://www.shengcaiss18.cn/user/，Curl error: Could not resolve host: www.shengcaiss18.cn	uri:/api/user/	ref:
+2016-06-23 13:34:31	请求http接口失败，请求url:http://common6.shengcaijinrong.comsettle/webapi/goBidding，Curl error: Could not resolve host: common6.shengcaijinrong.comsettle	uri:/api/bid/	ref:
