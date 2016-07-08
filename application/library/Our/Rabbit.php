@@ -31,7 +31,6 @@ class Rabbit {
                         'password' => $params['password'],
                         'vhost' => $params['vhost']);
 
-
         $this->_link = new \AMQPConnection($params);
 
         return $this->_link;
@@ -48,10 +47,8 @@ class Rabbit {
 
     public function send($ename, $qname, $rkey, $message) {
 
-        // 0.建立连接
-        if (!$this->_link->connect()) {
-            return false;
-        }
+        // 0. conn
+        $this->_link->connect();
 
         // 1.创建channel
         $channel = new \AMQPChannel($this->_link);
@@ -75,10 +72,37 @@ class Rabbit {
         $ex->publish($message, $rkey);
         $channel->commitTransaction();
 
-        // 5.断开
+        // 5.disconn
         $this->_link->disconnect();
 
         return true;
+    }
+
+    public function receive($qname) {
+
+        // 0.conn
+        $this->_link->connect();
+
+        // 1.创建channel
+        $channel = new \AMQPChannel($this->_link);
+
+        // 3.创建队列
+        $q = new \AMQPQueue($channel);
+        $q->setName($qname);
+        $q->setFlags(AMQP_DURABLE | AMQP_AUTODELETE);
+        $q->declare();
+
+        // 4.接收
+        $messages = $q->get();
+        $rst = $messages->getBody();
+
+        // 5.ack
+        $q->ack($messages->getDeliveryTag());
+
+        // 6.disconn
+        $this->_link->disconnect();
+
+        return $rst;
     }
 
 

@@ -3,6 +3,7 @@ namespace Rd\Domain\Sms;
 
 class Log {
 
+    private $id_ = null;
     private $ophone_ = null;
     private $iphone_ = null;
     private $content_ = null;
@@ -11,6 +12,14 @@ class Log {
     private $delay_ = null;
     private $create_time_ = null;
     private $update_time_ = null;
+
+    public function getId() {
+        return $this->id_;
+    }
+
+    public function setId($id) {
+        $this->id_ = $id;
+    }
 
     public function getOphone() {
         return $this->ophone_;
@@ -99,11 +108,30 @@ class Log {
         return $rst;
     }
 
+    public function edit() {
+
+        $db = new \Mysql\MessageSmsSendLogModel();
+
+        $fields = array();
+        $fields['mssl_id'] = $this->ophone_;
+        $fields['mssl_status'] = $this->iphone_;
+        $fields['mssl_update_time'] = $this->update_time_;
+
+        $db->begin();
+
+        $rst = $db->edit($fields);
+
+        $db->commit();
+
+        return $rst;
+    }
+
     public function sendMQ() {
 
         $mq = new \Rabbit\SmsModel();
 
         $fields = array();
+        $fields['mssl_id'] = $this->id_;
         $fields['mssl_ophone'] = $this->ophone_;
         $fields['mssl_iphone'] = $this->iphone_;
         $fields['mssl_content'] = $this->content_;
@@ -114,6 +142,15 @@ class Log {
         $fields['mssl_update_time'] = $this->update_time_;
 
         $rst = $mq->send(json_encode($fields));
+
+        return $rst;
+    }
+
+    public function receiveMQ() {
+
+        $mq = new \Rabbit\SmsModel();
+
+        $rst = $mq->receive();
 
         return $rst;
     }

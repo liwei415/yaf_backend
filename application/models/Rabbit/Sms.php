@@ -13,5 +13,11 @@ class SmsModel {
         return $amqp->send($this->ename_, $this->qname_, $this->rkey_, $message);
     }
 
+    public function receive() {
+
+        $amqp = \Our\Rabbit::getInstance();
+        return $amqp->receive($this->qname_);
+    }
+
 
 }
